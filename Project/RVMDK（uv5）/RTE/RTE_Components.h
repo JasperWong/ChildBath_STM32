@@ -3,8 +3,8 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'OLED' 
- * Target:  'Target 1' 
+ * Project: 'STM-32' 
+ * Target:  'ChildBath' 
  */
 
 #ifndef RTE_COMPONENTS_H

@@ -30,8 +30,10 @@
 
 #include "oled.h"
 #include "stdlib.h"
-#include "oledfont.h"  	 
-#include "delay.h"
+#include "oledfont.h"  
+#include "bsp_SysTick.h"
+
+//#include "delay.h"
 //OLED的显存
 //存放格式如下.
 //[0]0 1 2 3 ... 127	
@@ -265,9 +267,9 @@ void OLED_Init(void)
 
  
   OLED_RST_Set();
-	delay_ms(100);
+	Delay_ms(100);
 	OLED_RST_Clr();
-	delay_ms(100);
+	Delay_ms(100);
 	OLED_RST_Set(); 
 					  
 	OLED_WR_Byte(0xAE,OLED_CMD);//--turn off oled panel
