@@ -35,12 +35,9 @@ int main(void)
 		printf("\r\ntemperature %.1f\r\n",DS18B20_Get_Temp());	
 		
 		Delay_ms(10);
-		
-		/*调用Read_DHT11读取温湿度，若成功则输出该信息*/
+
 		if( Read_DHT11(&DHT11_Data)==SUCCESS)
 		{
-//			printf("\r\n读取DHT11成功!\r\n\r\n湿度为%d.%d ％RH ，温度为 %d.%d℃ \r\n",\
-//			DHT11_Data.humi_int,DHT11_Data.humi_deci,DHT11_Data.temp_int,DHT11_Data.temp_deci);
 			printf("\r\n温度为 %d℃ \r\n",DHT11_Data.temp_int);
 		}
 		OLED_ShowString(0,0,"room temperature:");
@@ -52,5 +49,5 @@ int main(void)
 	  
 }
 
-/*********************************************END OF FILE**********************/
+
 
