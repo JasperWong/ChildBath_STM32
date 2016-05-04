@@ -29,13 +29,13 @@ int main(void)
     OLED_Init();
     OLED_Clear();
     
-    u8 room_temp[2];
-    u8 *water_temp;
+    char room_temp[2];
+    char water_temp[5];
     int dec_pl, sign, ndigits = 3; 
 	while(1)
 	{
         printf("\r\ntemperature %.1f\r\n",DS18B20_Get_Temp());
-        water_temp=fcvt(DS18B20_Get_Temp,ndigits,&dec_pl,&sign);
+        sprintf(water_temp,"%.1f",DS18B20_Get_Temp());
         
 		Delay_ms(10);
 
@@ -48,7 +48,7 @@ int main(void)
 		OLED_ShowString(0,0,"room temperature:");
         OLED_ShowString(6,2,room_temp);
         OLED_ShowString(0,4,"water temperature:");
-        OLED_ShowString(20,6,"27");
+        OLED_ShowString(20,6,water_temp);
 		Delay_ms(2000);
 	}
 	  
