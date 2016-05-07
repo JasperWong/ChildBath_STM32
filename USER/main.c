@@ -6,6 +6,7 @@
 #include "bsp_ds18b20.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "relayAndBuzzer.h"
 
 void tempControl(int roomTemp,float waterTemp);
 DHT11_Data_TypeDef DHT11_Data;
@@ -29,14 +30,25 @@ int main(void)
     
     OLED_Init();
     OLED_Clear();
-
+    relayAndBuzzer_init();
     int nRoomTemp=0;
 	float fWaterTemp=0;	
     char room_temp[2];
     char water_temp[5];
     int dec_pl, sign, ndigits = 3; 
+
 	while(1)
 	{
+		Relay(1);
+		Buzz(1);
+	}
+	
+	
+	
+	
+	while(1)
+	{
+		Relay(1);
 		fWaterTemp=DS18B20_Get_Temp();
         printf("\r\ntemperature %.1f\r\n",fWaterTemp);
         sprintf(water_temp,"%.1f",fWaterTemp);
