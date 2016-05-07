@@ -7,8 +7,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+void tempControl(int roomTemp,float waterTemp);
 DHT11_Data_TypeDef DHT11_Data;
-
+u8 tempFlag=0;
 /**
   * @brief  主函数
   * @param  无
@@ -28,15 +29,17 @@ int main(void)
     
     OLED_Init();
     OLED_Clear();
-    
+
+    int nRoomTemp=0;
+	float fWaterTemp=0;	
     char room_temp[2];
     char water_temp[5];
     int dec_pl, sign, ndigits = 3; 
 	while(1)
 	{
-        printf("\r\ntemperature %.1f\r\n",DS18B20_Get_Temp());
-        sprintf(water_temp,"%.1f",DS18B20_Get_Temp());
-        
+		fWaterTemp=DS18B20_Get_Temp();
+        printf("\r\ntemperature %.1f\r\n",fWaterTemp);
+        sprintf(water_temp,"%.1f",fWaterTemp);
 		Delay_ms(10);
 
 		if( Read_DHT11(&DHT11_Data)==SUCCESS)
@@ -44,15 +47,80 @@ int main(void)
 			printf("\r\n温度为 %d℃ \r\n",DHT11_Data.temp_int);
             sprintf(room_temp, " %d" ,DHT11_Data.temp_int);
 		}
+		
+		tempControl(nRoomTemp,fWaterTemp);
         OLED_Clear();
 		OLED_ShowString(0,0,"room temperature:");
         OLED_ShowString(6,2,room_temp);
         OLED_ShowString(0,4,"water temperature:");
         OLED_ShowString(20,6,water_temp);
+		OLED_ShowChar(70,6,tempFlag);
 		Delay_ms(2000);
 	}
 	  
 }
+
+void tempControl(int roomTemp,float waterTemp)
+{
+	if(roomTemp<15)	
+	{
+		tempFlag=1;
+		if(waterTemp>38&&waterTemp<40)
+		{
+			Buzz(0);
+			Relay(0);
+		}
+		else 
+		{
+			Buzz(1);
+			Relay(1);
+		}
+		
+	}
+	if(roomTemp>15&&roomTemp<25)
+	{
+		tempFlag=2;
+		if(waterTemp>37&&waterTemp<38)
+		{
+			Buzz(0);
+			Relay(0);
+		}
+		else 
+		{
+			Buzz(1);
+			Relay(1);
+		}
+	}
+	if(roomTemp>25)
+	{
+		tempFlag=3;
+		if(waterTemp>35&&waterTemp<37)
+		{
+			Buzz(0);
+			Relay(0);
+		}
+		else 
+		{
+			Buzz(1);
+			Relay(1);
+		}
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
