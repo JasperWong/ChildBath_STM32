@@ -49,15 +49,15 @@ int main(void)
 		if( Read_DHT11(&DHT11_Data)==SUCCESS)
 		{
 			printf("\r\nÎÂ¶ÈÎª %d¡æ \r\n",DHT11_Data.temp_int);
-            sprintf(room_temp,```````` " %d" ,DHT11_Data.temp_int);
+            sprintf(room_temp," %d" ,DHT11_Data.temp_int);
 		}
 		
 		tempControl(nRoomTemp,fWaterTemp);
         OLED_Clear();
-		OLED_ShowString(0,0,"room temperature:");
-        OLED_ShowString(6,2,room_temp);
-        OLED_ShowString(0,4,"water temperature:");
-        OLED_ShowString(20,6,water_temp);
+		OLED_ShowString(28,2,"room:");
+        OLED_ShowString(70,2,room_temp);
+        OLED_ShowString(25,4,"water:");
+        OLED_ShowString(72,4,water_temp);
 		Delay_ms(2000);
 	}
 	  
@@ -65,6 +65,22 @@ int main(void)
 
 void tempControl(int roomTemp,float waterTemp)
 {
+	
+	if(roomTemp>25)
+	{
+		tempFlag=3;
+		if(waterTemp>35.0)
+		{
+			Buzz(0);
+			Relay(0);
+		}
+		else 
+		{
+			Buzz(1);
+			Relay(1);
+		}
+	}
+	
 	if(roomTemp<15)	
 	{
 		tempFlag=1;
@@ -94,20 +110,7 @@ void tempControl(int roomTemp,float waterTemp)
 			Relay(1);
 		}
 	}
-	if(roomTemp>25)
-	{
-		tempFlag=3;
-		if(waterTemp>35)
-		{
-			Buzz(0);
-			Relay(0);
-		}
-		else 
-		{
-			Buzz(1);
-			Relay(1);
-		}
-	}
+
 	
 }
 

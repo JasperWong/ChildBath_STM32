@@ -1,4 +1,5 @@
 #include "relayAndBuzzer.h"
+#include "bsp_SysTick.h"
 
 void relayAndBuzzer_init()
 {
@@ -13,7 +14,14 @@ void relayAndBuzzer_init()
 
 void Buzz(uint8_t isBuzz)
 {
-	if(isBuzz) GPIO_SetBits(GPIOB,GPIO_Pin_12);
+	if(isBuzz)
+	{
+		GPIO_SetBits(GPIOB,GPIO_Pin_12);
+//		Delay_ms(10);
+//		GPIO_ResetBits(GPIOB,GPIO_Pin_12);
+	}	
+		
+		
 	if(!isBuzz) GPIO_ResetBits(GPIOB,GPIO_Pin_12);
 }
 
